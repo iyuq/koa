@@ -2,7 +2,6 @@
 'use strict';
 
 const context = require('../helpers/context');
-const should = require('should');
 
 describe('ctx.search=', () => {
   it('should replace the search', () => {
@@ -17,8 +16,9 @@ describe('ctx.search=', () => {
     ctx.search = '?page=2&color=blue';
     ctx.url.should.equal('/store/shoes?page=2&color=blue');
     ctx.querystring.should.equal('page=2&color=blue');
-    should(ctx.query).have.property('page', '2');
-    should(ctx.query).have.property('color', 'blue');
+    Object.keys(ctx.query).should.eql(['page', 'color']);
+    ctx.query.page.should.equal('2');
+    ctx.query.color.should.equal('blue');
   });
 
   it('should change .url but not .originalUrl', () => {
